@@ -1,4 +1,7 @@
+from PIL import Image
+
 from CellState import CellState
+from util import gifmaker
 
 
 class SimpleProcessor:
@@ -6,6 +9,10 @@ class SimpleProcessor:
 
     def __init__(self, world):
         self.world = world
+
+    def make_cycles(self, n):
+        for x in range(0, n):
+            self.make_cycle()
 
     def make_cycle(self):
         self.world.prepare_copy()
@@ -22,3 +29,18 @@ class SimpleProcessor:
                 else:
                     self.world.set_in_world_copy(i, j, CellState.Dead)
         self.world.switch_copy()
+
+    def make_cycles_gif(self, n, path, scale=1):
+        sequence = []
+        for x in range(0, n):
+            self.make_cycle()
+            im = self.world.get_as_image()
+            sequence.append(
+                im.copy().convert("P").resize(
+                    (self.world.width * scale, self.world.height * scale),
+                    Image.ANTIALIAS
+                )
+            )
+        gif_file = open(path, "wb")
+        gifmaker.make_delta(gif_file, sequence)
+        gif_file.close()

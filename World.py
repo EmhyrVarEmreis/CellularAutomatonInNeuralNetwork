@@ -1,3 +1,5 @@
+from PIL import Image
+
 from CellState import CellState
 
 
@@ -18,7 +20,7 @@ class World:
 
     def get_cell(self, i, j):
         if i < 0 or j < 0 or i >= self.width or j >= self.height:
-            return CellState.Dead
+            return self.world[abs(i % self.width)][abs(j % self.height)]
         else:
             return self.world[i][j]
 
@@ -41,3 +43,12 @@ class World:
 
     def print(self):
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.world]))
+
+    def save_as_image(self, path):
+        im = self.get_as_image()
+        im.save(path)
+
+    def get_as_image(self):
+        im = Image.new('RGB', (self.width, self.height))
+        im.putdata([(int(x / 1 * 255), int(x / 1 * 255), int(x / 1 * 255)) for sublist in self.world for x in sublist])
+        return im
