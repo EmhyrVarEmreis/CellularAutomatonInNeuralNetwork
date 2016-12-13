@@ -1,5 +1,6 @@
-import Neighborhood
 from CellState import CellState
+
+from automaton import Neighborhood
 
 
 def moore2d(world, x, y):

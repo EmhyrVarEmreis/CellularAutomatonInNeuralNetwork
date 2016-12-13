@@ -3,7 +3,7 @@ from numpy import array
 from neural.SimpleNeuralNetwork import SimpleNeuralNetwork
 
 if __name__ == "__main__":
-    neural_network = SimpleNeuralNetwork()
+    neural_network = SimpleNeuralNetwork(3)
 
     print("Random starting synaptic weights: ")
     print(neural_network.synaptic_weights)

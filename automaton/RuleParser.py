@@ -1,4 +1,4 @@
-import ProcessingFunction
+from automaton import ProcessingFunction
 
 
 def parse_rule_file(file_name):

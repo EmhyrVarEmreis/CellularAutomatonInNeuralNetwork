@@ -1,6 +1,6 @@
 from PIL import Image
 
-from CellState import CellState
+from automaton.CellState import CellState
 
 
 class World:

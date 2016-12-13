@@ -1,7 +1,7 @@
-import RuleParser
-from CellState import CellState
-from SimpleProcessor import SimpleProcessor
-from World import World
+from automaton import RuleParser
+from automaton.CellState import CellState
+from automaton.SimpleProcessor import SimpleProcessor
+from automaton.World import World
 
 
 class Main:
@@ -23,15 +23,15 @@ class Main:
         world.set_in_world(12, 11, CellState.Alive)
         world.set_in_world(12, 12, CellState.Alive)
 
-        processing_function = RuleParser.parse_rule_file('resource/rule/2DA/life_34')
+        processing_function = RuleParser.parse_rule_file('../resource/rule/2DA/life_34')
 
         processor = SimpleProcessor(world, processing_function)
 
         world.print()
 
-        processor.make_cycles_gif(250, 'tmp/w0.gif', 5)
+        processor.make_cycles_gif(250, '../tmp/w0.gif', 5)
 
-        world.save_as_image('tmp/w0.png')
+        world.save_as_image('../tmp/w0.png')
 
         print("")
         #

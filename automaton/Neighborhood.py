@@ -1,4 +1,4 @@
-from CellState import CellState
+from automaton.CellState import CellState
 
 
 def moore2d(world, x, y):

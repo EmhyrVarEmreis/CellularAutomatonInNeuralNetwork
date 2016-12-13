@@ -4,12 +4,12 @@ from numpy import exp, array, random, dot
 class SimpleNeuralNetwork:
     synaptic_weights = []
 
-    def __init__(self, filename=None):
+    def __init__(self, n, filename=None):
         if filename:
             self.read_synaptic_weights(filename)
         else:
             random.seed(1)
-            self.synaptic_weights = 2 * random.random((3, 1)) - 1
+            self.synaptic_weights = 2 * random.random((n, 1)) - 1
 
     @staticmethod
     def __sigmoid(x):
