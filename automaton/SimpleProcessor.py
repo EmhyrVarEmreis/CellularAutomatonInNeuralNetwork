@@ -31,12 +31,12 @@ class SimpleProcessor:
             for j in range(0, self.world.width):
                 if self.learning_input:
                     output = self.processing_function(self.world, i, j, self.learning_input)
-                    state = output[len(output) - 1]
+                    state = output[- 1]
                     self.world.set_in_world_copy(i, j, state)
                     if state == CellState.Alive:
-                        output[len(output) - 1] = 1
+                        output[- 1] = 1
                     else:
-                        output[len(output) - 1] = 0
+                        output[- 1] = 0
                     if f:
                         f.write(' '.join([str(item) for item in output]) + '\n')
                 else:

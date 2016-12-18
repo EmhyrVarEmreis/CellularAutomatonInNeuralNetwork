@@ -12,7 +12,7 @@ def get_processing_function(dimensions, neighborhood_type, birth_nums, survival_
 
     def processing_function(world, x, y, extended_output=False):
         output = neighborhood(world, x, y, extended_output)
-        n = output[len(output) - 1]
+        n = output[- 1]
         if world.get_cell(x, y) == CellState.Alive:
             if n in survival_nums:
                 new_state = CellState.Alive
