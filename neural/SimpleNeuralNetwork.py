@@ -2,14 +2,16 @@ from numpy import exp, array, random, dot
 
 
 class SimpleNeuralNetwork:
-    synaptic_weights = []
+    synaptic_weights = None
+    input_size = None
 
     def __init__(self, n, filename=None):
+        self.input_size = n
         if filename:
             self.read_synaptic_weights(filename)
         else:
             random.seed(1)
-            self.synaptic_weights = 2 * random.random((n, 1)) - 1
+            self.synaptic_weights = 2 * random.random((self.input_size, 1)) - 1
 
     @staticmethod
     def __sigmoid(x):

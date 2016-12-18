@@ -1,3 +1,5 @@
+import random
+
 from PIL import Image
 
 from automaton.CellState import CellState
@@ -17,6 +19,20 @@ class World:
             for j in range(0, self.width):
                 new.append(CellState.Dead)
             self.world.append(new)
+
+    def make_random(self, percentage):
+        alive_count = int(self.width * self.height * percentage / 100)
+
+        random.seed(None)
+
+        while alive_count > 0:
+            while True:
+                a = random.randint(0, self.width - 1)
+                b = random.randint(0, self.height - 1)
+                if self.world[a][b] == CellState.Dead:
+                    break
+            self.world[a][b] = CellState.Alive
+            alive_count -= 1
 
     def get_cell(self, i, j):
         if i < 0 or j < 0 or i >= self.width or j >= self.height:

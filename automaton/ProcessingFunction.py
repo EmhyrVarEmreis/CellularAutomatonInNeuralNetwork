@@ -1,30 +1,5 @@
-from CellState import CellState
-
 from automaton import Neighborhood
-
-
-def moore2d(world, x, y):
-    n = 0
-    if world.get_cell(x - 1, y) == CellState.Alive:
-        n += 1
-    if world.get_cell(x + 1, y) == CellState.Alive:
-        n += 1
-    if world.get_cell(x, y - 1) == CellState.Alive:
-        n += 1
-    if world.get_cell(x, y + 1) == CellState.Alive:
-        n += 1
-    return n
-
-
-def neumann2d(world, x, y):
-    n = 0
-    for k in range(x - 1, x + 2):
-        for l in range(y - 1, y + 2):
-            if world.get_cell(k, l) == CellState.Alive:
-                n += 1
-    if world.get_cell(x, y) == CellState.Alive:
-        n -= 1
-    return n
+from automaton.CellState import CellState
 
 
 def get_processing_function(dimensions, neighborhood_type, birth_nums, survival_nums):
@@ -35,17 +10,23 @@ def get_processing_function(dimensions, neighborhood_type, birth_nums, survival_
     elif processing_type == '2B':
         neighborhood = Neighborhood.neumann2d
 
-    def processing_function(world, x, y):
-        n = neighborhood(world, x, y)
+    def processing_function(world, x, y, extended_output=False):
+        output = neighborhood(world, x, y, extended_output)
+        n = output[len(output) - 1]
         if world.get_cell(x, y) == CellState.Alive:
             if n in survival_nums:
-                return CellState.Alive
+                new_state = CellState.Alive
             else:
-                return CellState.Dead
+                new_state = CellState.Dead
         else:
             if n in birth_nums:
-                return CellState.Alive
+                new_state = CellState.Alive
             else:
-                return CellState.Dead
+                new_state = CellState.Dead
+        if extended_output:
+            output[len(output) - 1] = new_state
+            return output
+        else:
+            return new_state
 
     return processing_function
