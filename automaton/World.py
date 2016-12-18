@@ -71,7 +71,7 @@ class World:
     def load(self, file_path):
         with open(file_path, 'r') as f:
             f.write('\n'.join([''.join(['{:1}'.format(item) for item in row]) for row in self.world]))
-            self.world = [[cell_state_from(i) for i in l.split()] for l in f.readlines() if
+            self.world = [[cell_state_from(int(str(i).strip())) for i in l.split()] for l in f.readlines() if
                           (not l.startswith('#')) and (not l.strip() == '')]
 
     def save_as_image(self, path):
