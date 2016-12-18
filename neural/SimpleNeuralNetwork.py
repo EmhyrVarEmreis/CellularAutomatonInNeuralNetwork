@@ -7,7 +7,7 @@ class SimpleNeuralNetwork:
 
     def __init__(self, n, filename=None):
         self.input_size = n
-        if filename:
+        if filename is not None:
             self.read_synaptic_weights(filename)
         else:
             random.seed(1)
@@ -44,3 +44,17 @@ class SimpleNeuralNetwork:
     def save_synaptic_weights(self, filename):
         with open(filename, 'w') as f:
             f.writelines([' '.join([str(item) for item in row]) for row in self.synaptic_weights.T])
+
+    def verify(self, training_set):
+        pos = 0
+        n = 0
+        for row in training_set[0]:
+            ret = self.think(array(row))
+            if ret > 0.5:
+                ret = 1
+            else:
+                ret = 0
+            if ret == training_set[1][n]:
+                pos += 1
+            n += 1
+        return pos / n * 100
