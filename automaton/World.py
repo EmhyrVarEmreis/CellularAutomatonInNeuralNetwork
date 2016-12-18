@@ -2,7 +2,7 @@ import random
 
 from PIL import Image
 
-from automaton.CellState import CellState
+from automaton.CellState import CellState, cell_state_from
 
 
 class World:
@@ -14,6 +14,10 @@ class World:
     def __init__(self, width, height):
         self.width = width
         self.height = height
+        self.clear()
+
+    def clear(self):
+        self.world = []
         for i in range(0, self.height):
             new = []
             for j in range(0, self.width):
@@ -59,6 +63,16 @@ class World:
 
     def print(self):
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.world]))
+
+    def save(self, file_path):
+        with open(file_path, 'w') as f:
+            f.write('\n'.join([''.join(['{:1}'.format(item) for item in row]) for row in self.world]))
+
+    def load(self, file_path):
+        with open(file_path, 'r') as f:
+            f.write('\n'.join([''.join(['{:1}'.format(item) for item in row]) for row in self.world]))
+            self.world = [[cell_state_from(i) for i in l.split()] for l in f.readlines() if
+                          (not l.startswith('#')) and (not l.strip() == '')]
 
     def save_as_image(self, path):
         im = self.get_as_image()

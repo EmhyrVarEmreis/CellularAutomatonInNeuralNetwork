@@ -28,7 +28,7 @@ class Main:
 
         processor = SimpleProcessor(world, processing_function)
 
-        processor.enable_learning_input(True, '../tmp/l1')
+        processor.enable_learning_output(True, '../tmp/l1')
 
         world.print()
 

@@ -18,7 +18,7 @@ class SimpleProcessor:
         for x in range(0, n):
             self.make_cycle()
 
-    def enable_learning_input(self, enable=True, learning_input_location='../tmp/l1'):
+    def enable_learning_output(self, enable=True, learning_input_location='../tmp/l1'):
         self.learning_input = enable
         self.learning_input_location = learning_input_location
 
