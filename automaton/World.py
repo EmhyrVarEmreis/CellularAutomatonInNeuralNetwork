@@ -70,8 +70,15 @@ class World:
 
     def load(self, file_path):
         with open(file_path, 'r') as f:
-            self.world = [[cell_state_from(int(str(i).strip())) for i in l.split()] for l in f.readlines() if
-                          (not l.startswith('#')) and (not l.strip() == '')]
+            self.world = []
+            for l in f.readlines():
+                new = []
+                if (not l.startswith('#')) and (not l.strip() == ''):
+                    for i in l:
+                        if not i.strip() == '':
+                            new.append(cell_state_from(int(str(i).strip())))
+                if len(new) > 0:
+                    self.world.append(new)
 
     def save_as_image(self, path):
         im = self.get_as_image()
