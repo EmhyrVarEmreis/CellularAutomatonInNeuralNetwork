@@ -59,6 +59,7 @@ if __name__ == "__main__":
     # Init new world
     world.clear()
     world.make_random(world_percentage)
+    world.save('../tmp/tmp1.txt')
 
     # Save world before processing
     world.save(world_location)
@@ -73,6 +74,7 @@ if __name__ == "__main__":
 
     # Load the same world
     world.load(world_location)
+    world.save('../tmp/tmp2.txt')
 
     # Make neural processed cycles GIF
     processor.make_cycles_gif(cycles_count_normal, gif_location_neural, 5)

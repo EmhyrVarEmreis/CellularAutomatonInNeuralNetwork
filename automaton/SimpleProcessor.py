@@ -45,8 +45,9 @@ class SimpleProcessor:
 
     def make_cycles_gif(self, n, path, scale=1):
         sequence = []
-        for x in range(0, n):
-            self.make_cycle()
+        for x in range(0, n + 1):
+            if x != 0:
+                self.make_cycle()
             im = self.world.get_as_image()
             sequence.append(
                 im.copy().convert("P").resize(
