@@ -36,7 +36,7 @@ def get_processing_function_bundle(dimensions, neighborhood_type, birth_nums, su
 
 def get_neural_processing_function_bundle(neighborhood, neural_network):
     def processing_function(world, x, y, extended_output=False):
-        output = neighborhood(world, x, y, extended_output)
+        output = neighborhood(world, x, y, True)
         ret = neural_network.think(array(output[:-1]))
         if ret > 0.5:
             ret = 1

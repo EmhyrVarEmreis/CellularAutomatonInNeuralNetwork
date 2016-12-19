@@ -22,13 +22,13 @@ if __name__ == "__main__":
     # Options
     file_learn_loc = '../tmp/l1'
     file_output_loc = '../tmp/n1'
-    learn_cycles_count = 10
+    learn_cycles_count = 10000
     world_size = [25, 25]
     world_percentage = 65
     world_location = '../tmp/w1.txt'
     cycles_count_learning = 1
-    cycles_count_normal = 100
-    cycles_count_neural = 100
+    cycles_count_normal = 250
+    cycles_count_neural = 250
     gif_location_normal = '../tmp/w1a.gif'
     gif_location_neural = '../tmp/w1b.gif'
     processing_function_rule_location = '../resource/rule/2DA/life'
@@ -73,7 +73,6 @@ if __name__ == "__main__":
 
     # Load the same world
     world.load(world_location)
-    world.print()
 
     # Make neural processed cycles GIF
     processor.make_cycles_gif(cycles_count_normal, gif_location_neural, 5)
