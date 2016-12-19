@@ -1,8 +1,10 @@
+from numpy import array
+
 from automaton import Neighborhood
-from automaton.CellState import CellState
+from automaton.CellState import CellState, cell_state_from
 
 
-def get_processing_function(dimensions, neighborhood_type, birth_nums, survival_nums):
+def get_processing_function_bundle(dimensions, neighborhood_type, birth_nums, survival_nums):
     neighborhood = None
     processing_type = dimensions + '' + neighborhood_type
     if processing_type == '2A':
@@ -29,4 +31,22 @@ def get_processing_function(dimensions, neighborhood_type, birth_nums, survival_
         else:
             return new_state
 
-    return processing_function
+    return [processing_function, neighborhood]
+
+
+def get_neural_processing_function_bundle(neighborhood, neural_network):
+    def processing_function(world, x, y, extended_output=False):
+        output = neighborhood(world, x, y, extended_output)
+        ret = neural_network.think(array(output[:-1]))
+        if ret > 0.5:
+            ret = 1
+        else:
+            ret = 0
+        new_state = cell_state_from(ret)
+        if extended_output:
+            output[len(output) - 1] = new_state
+            return output
+        else:
+            return new_state
+
+    return [processing_function, neighborhood]

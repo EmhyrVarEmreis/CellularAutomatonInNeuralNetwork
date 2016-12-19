@@ -6,13 +6,13 @@ from util import gifmaker
 
 class SimpleProcessor:
     world = None
-    processing_function = None
+    processing_function_bundle = None
     learning_input = False
     learning_input_location = '../tmp/l1'
 
     def __init__(self, world, processing_function):
         self.world = world
-        self.processing_function = processing_function
+        self.processing_function_bundle = processing_function
 
     def make_cycles(self, n):
         for x in range(0, n):
@@ -30,7 +30,7 @@ class SimpleProcessor:
         for i in range(0, self.world.height):
             for j in range(0, self.world.width):
                 if self.learning_input:
-                    output = self.processing_function(self.world, i, j, self.learning_input)
+                    output = self.processing_function_bundle[0](self.world, i, j, self.learning_input)
                     state = output[- 1]
                     self.world.set_in_world_copy(i, j, state)
                     if state == CellState.Alive:
@@ -40,7 +40,7 @@ class SimpleProcessor:
                     if f:
                         f.write(' '.join([str(item) for item in output]) + '\n')
                 else:
-                    self.world.set_in_world_copy(i, j, self.processing_function(self.world, i, j))
+                    self.world.set_in_world_copy(i, j, self.processing_function_bundle[0](self.world, i, j))
         self.world.switch_copy()
 
     def make_cycles_gif(self, n, path, scale=1):

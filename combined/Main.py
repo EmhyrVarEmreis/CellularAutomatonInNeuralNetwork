@@ -1,6 +1,7 @@
 from numpy import array
 
 from automaton import RuleParser
+from automaton.ProcessingFunction import get_neural_processing_function_bundle
 from automaton.SimpleProcessor import SimpleProcessor
 from automaton.World import World
 from neural import TrainingLoader
@@ -66,9 +67,13 @@ if __name__ == "__main__":
     processor.make_cycles_gif(cycles_count_normal, gif_location_normal, 5)
 
     # TODO set neural_processing_function
+    processing_function_neural = get_neural_processing_function_bundle(processor.processing_function_bundle[1],
+                                                                       neural_network_combined[0])
+    processor = SimpleProcessor(world, processing_function_neural)
 
     # Load the same world
     world.load(world_location)
+    world.print()
 
     # Make neural processed cycles GIF
     processor.make_cycles_gif(cycles_count_normal, gif_location_neural, 5)
