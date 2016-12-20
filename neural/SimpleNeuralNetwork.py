@@ -49,7 +49,7 @@ class SimpleNeuralNetwork:
         pos = 0
         n = 0
         for row in training_set[0]:
-            ret = self.think(array(row))
+            ret = self.think(array([float(i) for i in row]))
             if ret > 0.5:
                 ret = 1
             else:

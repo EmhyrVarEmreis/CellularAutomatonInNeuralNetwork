@@ -8,50 +8,78 @@ from neural import TrainingLoader
 from neural.SimpleNeuralNetwork import SimpleNeuralNetwork
 
 
-def learn_from_file(file_learn, file_output=None, cycles=10000):
+def learn_from_file(file_learn, file_output=None, cycles=10000, reduce=False):
     training_set_tmp = TrainingLoader.load(file_learn)
+    if reduce:
+        n = 0
+        c = 0
+        training_set_tmp_inputs = []
+        training_set_tmp_outputs = []
+        for row in training_set_tmp[0]:
+            if c == 0 and training_set_tmp[1][n] == 1:
+                training_set_tmp_inputs.append(row)
+                training_set_tmp_outputs.append(training_set_tmp[1][n])
+                c += 1
+            elif c == 1 and training_set_tmp[1][n] == 0:
+                training_set_tmp_inputs.append(row)
+                training_set_tmp_outputs.append(training_set_tmp[1][n])
+                c -= 1
+            n += 1
+        training_set_tmp = [training_set_tmp_inputs, training_set_tmp_outputs]
     network = SimpleNeuralNetwork(len(training_set_tmp[0][0]))
     network.train(array(training_set_tmp[0]), array([training_set_tmp[1]]).T, cycles)
     if file_output is not None:
         network.save_synaptic_weights(file_output)
     status = network.verify(training_set_tmp)
-    return [network, status, training_set_tmp]
+    return [network, status, training_set_tmp, network.synaptic_weights]
 
 
 if __name__ == "__main__":
     # Options
     file_learn_loc = '../tmp/l1'
     file_output_loc = '../tmp/n1'
-    learn_cycles_count = 10000
+    learn_cycles_count = 5
+    learn_reduce = True
     world_size = [25, 25]
-    world_percentage = 65
+    world_percentage = 75
     world_location = '../tmp/w1.txt'
-    cycles_count_learning = 1
-    cycles_count_normal = 250
-    cycles_count_neural = 250
+    world_location_old = '../tmp/w0.txt'
+    cycles_count_learning = 5
+    cycles_count_normal = 25
+    cycles_count_neural = 25
     gif_location_normal = '../tmp/w1a.gif'
     gif_location_neural = '../tmp/w1b.gif'
     processing_function_rule_location = '../resource/rule/2DA/life'
 
-    # Init world
-    world = World(25, 25)
-    world.make_random(world_percentage)
+    with open('../tmp/results', 'w') as f:
+        world = World(world_size[0], world_size[1])
+        processing_function = RuleParser.parse_rule_file(processing_function_rule_location)
+        for x in range(10000):
+            # Init world
+            world.make_random(world_percentage)
+            world.save(world_location_old)
 
-    # Load processing function
-    processing_function = RuleParser.parse_rule_file(processing_function_rule_location)
-    processor = SimpleProcessor(world, processing_function)
+            # Load processing function
+            processor = SimpleProcessor(world, processing_function)
 
-    # Enable learning output
-    processor.enable_learning_output(True, file_learn_loc)
+            # Enable learning output
+            processor.enable_learning_output(True, file_learn_loc)
 
-    # Run learning cycles
-    processor.make_cycles(cycles_count_learning)
+            # Run learning cycles
+            processor.make_cycles(cycles_count_learning)
 
-    # Learn network
-    neural_network_combined = learn_from_file(file_learn_loc, file_output_loc, learn_cycles_count)
+            # Learn network
+            neural_network_combined = learn_from_file(file_learn_loc, file_output_loc, learn_cycles_count, learn_reduce)
 
-    # Print success percentage
-    print("Status: " + str(neural_network_combined[1]) + '%')
+            # Print success percentage
+            print("Status: " + str(neural_network_combined[1]) + '%')
+
+            f.write(
+                str(neural_network_combined[1])
+                + ' '
+                + ' '.join([str(item) for item in neural_network_combined[3]]) + '\n'
+            )
+            f.flush()
 
     # Disable learning output
     processor.enable_learning_output(False)
@@ -65,11 +93,14 @@ if __name__ == "__main__":
     world.save(world_location)
 
     # Make normal cycles GIF
-    processor.make_cycles_gif(cycles_count_normal, gif_location_normal, 5)
+    # processor.make_cycles_gif(cycles_count_normal, gif_location_normal, 5)
+    world.save_as_image('../tmp/a1.png')
+    processor.make_cycle()
+    world.save_as_image('../tmp/a2.png')
 
-    # TODO set neural_processing_function
-    processing_function_neural = get_neural_processing_function_bundle(processor.processing_function_bundle[1],
-                                                                       neural_network_combined[0])
+    processing_function_neural = get_neural_processing_function_bundle(
+        processor.processing_function_bundle[1], neural_network_combined[0]
+    )
     processor = SimpleProcessor(world, processing_function_neural)
 
     # Load the same world
@@ -77,4 +108,9 @@ if __name__ == "__main__":
     world.save('../tmp/tmp2.txt')
 
     # Make neural processed cycles GIF
-    processor.make_cycles_gif(cycles_count_normal, gif_location_neural, 5)
+    # processor.make_cycles_gif(cycles_count_normal, gif_location_neural, 5)
+    world.save_as_image('../tmp/a3.png')
+    processor.make_cycle()
+    world.save_as_image('../tmp/a4.png')
+    processor.make_cycle()
+    world.save_as_image('../tmp/a5.png')

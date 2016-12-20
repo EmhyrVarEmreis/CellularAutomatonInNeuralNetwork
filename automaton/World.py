@@ -25,6 +25,7 @@ class World:
             self.world.append(new)
 
     def make_random(self, percentage):
+        self.clear()
         alive_count = int(self.width * self.height * percentage / 100)
 
         random.seed(None)
