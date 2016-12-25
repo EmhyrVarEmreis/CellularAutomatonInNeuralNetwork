@@ -22,6 +22,12 @@ class SimpleProcessor:
         self.learning_input = enable
         self.learning_input_location = learning_input_location
 
+    def clear_learning_output(self):
+        with open(self.learning_input_location, 'w') as f:
+            f.seek(0)
+            f.truncate()
+            f.close()
+
     def make_cycle(self):
         f = None
         if self.learning_input:

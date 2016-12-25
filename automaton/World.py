@@ -81,11 +81,15 @@ class World:
                 if len(new) > 0:
                     self.world.append(new)
 
-    def save_as_image(self, path):
-        im = self.get_as_image()
+    def save_as_image(self, path, scale=1):
+        im = self.get_as_image(scale)
         im.save(path)
 
-    def get_as_image(self):
+    def get_as_image(self, scale=1):
         im = Image.new('RGB', (self.width, self.height))
         im.putdata([(int(x / 1 * 255), int(x / 1 * 255), int(x / 1 * 255)) for sublist in self.world for x in sublist])
+        im = im.copy().convert("P").resize(
+            (self.width * scale, self.height * scale),
+            Image.ANTIALIAS
+        )
         return im
