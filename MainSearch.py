@@ -8,19 +8,26 @@ from neural import TrainingLoader
 from neural.SimpleLayeredNeuralNetwork import SimpleLayeredNeuralNetwork
 from neural.SimpleNeuralNetwork import SimpleNeuralNetwork
 
-opt_tries = 1000
-opt_cycles = 30001
-opt_multi = True
-opt_neural_num = 10
-opt_every = True
-opt_step = 1000
-opt_max_error = 0.2734375
-opt_folder = 'tmp/search/' + str(opt_neural_num)
-opt_input_file = 'resource/life_all'
-
 
 def main(argv):
-    global opt_folder
+    opt_tries = 1000
+    opt_cycles = 30001
+    opt_multi = True
+    opt_neural_num = 10
+    opt_every = True
+    opt_step = 1000
+    opt_max_error = 0.2734375
+    opt_folder = 'tmp/search/'
+    opt_input_file = 'resource/life_all'
+
+    if len(argv) > 0:
+        opt_tries = int(argv[0])
+        opt_cycles = int(argv[1])
+        opt_multi = str(argv[2]).lower() == 't'
+        opt_neural_num = int(argv[3])
+        opt_every = str(argv[4]).lower() == 't'
+        opt_step = int(argv[5])
+        opt_max_error = float(argv[6])
 
     training_set_tmp = TrainingLoader.load(opt_input_file)
 
