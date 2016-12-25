@@ -16,7 +16,7 @@ opt_every = True
 opt_step = 1000
 opt_max_error = 0.2734375
 opt_folder = 'tmp/search/' + str(opt_neural_num)
-opt_input_file = 'tmp/life_all'
+opt_input_file = 'resource/life_all'
 
 
 def main(argv):
