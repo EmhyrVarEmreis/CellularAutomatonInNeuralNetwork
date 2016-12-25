@@ -22,7 +22,7 @@ if __name__ == "__main__":
     print("Weights:")
     print(neural_network.synaptic_weights)
 
-    filename = '../tmp/n1'
+    filename = 'tmp/n1'
 
     print("Saving as %s" % filename)
     neural_network.save_synaptic_weights(filename)

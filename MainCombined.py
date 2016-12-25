@@ -47,20 +47,20 @@ def learn_from_file(file_learn, file_output=None, cycles=10000, reduce=False, mu
 
 if __name__ == "__main__":
     # Options
-    file_learn_loc = '../tmp/l1'
-    file_output_loc = '../tmp/n1'
+    file_learn_loc = 'tmp/l1'
+    file_output_loc = 'tmp/n1'
     learn_cycles_count = 60000
     learn_reduce = True
     world_size = [50, 50]
     world_percentage = 50
-    world_location = '../tmp/w1.txt'
-    world_location_old = '../tmp/w0.txt'
+    world_location = 'tmp/w1.txt'
+    world_location_old = 'tmp/w0.txt'
     cycles_count_learning = 250
     cycles_count_normal = 25
     cycles_count_neural = 25
-    gif_location_normal = '../tmp/w1a.gif'
-    gif_location_neural = '../tmp/w1b.gif'
-    processing_function_rule_location = '../resource/rule/2DA/life'
+    gif_location_normal = 'tmp/w1a.gif'
+    gif_location_neural = 'tmp/w1b.gif'
+    processing_function_rule_location = 'resource/rule/2DA/life'
     neural_multi = True
     neural_multi_layer1_count = 9
 
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     # Init world
     world.make_random(world_percentage)
     world.save(world_location_old)
-    world.save_as_image('../tmp/0.png', 5)
+    world.save_as_image('tmp/0.png', 5)
 
     # Load processing function
     processor = SimpleProcessor(world, processing_function)
@@ -99,22 +99,22 @@ if __name__ == "__main__":
     # Init new world
     world.clear()
     # world.make_random(world_percentage)
-    # world.save('../tmp/tmp1.txt')
+    # world.save('tmp/tmp1.txt')
 
     # Save world before processing
     world.load(world_location_old)
 
     # Make normal cycles GIF
     # processor.make_cycles_gif(cycles_count_normal, gif_location_normal, 5)
-    world.save_as_image('../tmp/a1.png', 5)
+    world.save_as_image('tmp/a1.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/a2.png', 5)
+    world.save_as_image('tmp/a2.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/a3.png', 5)
+    world.save_as_image('tmp/a3.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/a4.png', 5)
+    world.save_as_image('tmp/a4.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/a5.png', 5)
+    world.save_as_image('tmp/a5.png', 5)
 
     processing_function_neural = get_neural_processing_function_bundle(
         processor.processing_function_bundle[1], neural_network_combined[0]
@@ -123,16 +123,16 @@ if __name__ == "__main__":
 
     # Load the same world
     world.load(world_location_old)
-    world.save('../tmp/tmp2.txt')
+    world.save('tmp/tmp2.txt')
 
     # Make neural processed cycles GIF
     # processor.make_cycles_gif(cycles_count_normal, gif_location_neural, 5)
-    world.save_as_image('../tmp/b1.png', 5)
+    world.save_as_image('tmp/b1.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/b2.png', 5)
+    world.save_as_image('tmp/b2.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/b3.png', 5)
+    world.save_as_image('tmp/b3.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/b4.png', 5)
+    world.save_as_image('tmp/b4.png', 5)
     processor.make_cycle()
-    world.save_as_image('../tmp/b5.png', 5)
+    world.save_as_image('tmp/b5.png', 5)

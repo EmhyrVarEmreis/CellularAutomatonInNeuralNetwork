@@ -24,17 +24,17 @@ class Main:
         # world.set_in_world(12, 11, CellState.Alive)
         # world.set_in_world(12, 12, CellState.Alive)
 
-        processing_function = RuleParser.parse_rule_file('../resource/rule/2DA/life')
+        processing_function = RuleParser.parse_rule_file('resource/rule/2DA/life')
 
         processor = SimpleProcessor(world, processing_function)
 
-        processor.enable_learning_output(True, '../tmp/l1')
+        processor.enable_learning_output(True, 'tmp/l1')
 
         world.print()
 
-        processor.make_cycles_gif(1, '../tmp/w0.gif', 5)
+        processor.make_cycles_gif(1, 'tmp/w0.gif', 5)
 
-        world.save_as_image('../tmp/w0.png')
+        world.save_as_image('tmp/w0.png')
 
         print("")
         #
