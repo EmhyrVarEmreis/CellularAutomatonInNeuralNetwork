@@ -5,7 +5,7 @@ from neural.SimpleNeuralNetwork import SimpleNeuralNetwork
 if __name__ == "__main__":
     neural_network = SimpleNeuralNetwork(3)
 
-    print("Random starting synaptic weights: ")
+    print("Random synaptic weights: ")
     print(neural_network.synaptic_weights)
 
     training_set_inputs = array([[0, 0, 1], [1, 1, 1], [1, 0, 1], [0, 1, 1]])
@@ -13,13 +13,13 @@ if __name__ == "__main__":
 
     neural_network.train(training_set_inputs, training_set_outputs, 10000)
 
-    print("New synaptic weights after training: ")
+    print("Synaptic weights after learning: ")
     print(neural_network.synaptic_weights)
 
-    print("Considering situation [1, 0, 0] -> ?: ")
+    print("[1, 0, 0] -> ?: ")
     print(neural_network.think(array([1, 0, 0])))
 
-    print("Weights:")
+    print("Weights before saving:")
     print(neural_network.synaptic_weights)
 
     filename = 'tmp/n1'
@@ -30,8 +30,8 @@ if __name__ == "__main__":
     print("Reading as %s" % filename)
     neural_network.read_synaptic_weights(filename)
 
-    print("Weights:")
+    print("Weights after reading:")
     print(neural_network.synaptic_weights)
 
-    print("Considering situation [1, 0, 0] -> ?: ")
+    print("[1, 0, 0] -> ?: ")
     print(neural_network.think(array([1, 0, 0])))

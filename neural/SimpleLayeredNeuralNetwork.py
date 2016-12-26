@@ -35,34 +35,58 @@ class SimpleLayeredNeuralNetwork:
         for iteration in range(number_of_training_iterations):
             self.train_once(training_set_inputs, training_set_outputs)
 
-    # noinspection PyUnresolvedReferences
+    # noinspection PyUnresolvedReferences,PyTypeChecker
     def train_once(self, training_set_inputs, training_set_outputs):
-        output_from_layer_1, output_from_layer_2 = self.think(training_set_inputs)
+        self.think(training_set_inputs)
 
-        layer2_error = training_set_outputs - output_from_layer_2
-        layer2_delta = layer2_error * self.__sigmoid_derivative(output_from_layer_2)
+        prev_layer = None
+        for i, layer in reversed(list(enumerate(self.layers))):
+            next_layer = None if i == 0 else self.layers[i - 1]
+            if prev_layer is None:
+                layer.error = training_set_outputs - layer.output
+            else:
+                layer.error = np.dot(prev_layer.delta, prev_layer.synaptic_weights.T)
+            layer.delta = layer.error * self.__sigmoid_derivative(layer.output)
+            if next_layer is None:
+                layer.adjustment = np.dot(training_set_inputs.T, layer.delta)
+            else:
+                layer.adjustment = np.dot(next_layer.output.T, layer.delta)
+            prev_layer = layer
 
-        self.error = np.mean(np.abs(layer2_error))
+        for layer in self.layers:
+            layer.synaptic_weights += layer.adjustment
 
-        layer1_error = layer2_delta.dot(self.layers[1].synaptic_weights.T)
-        layer1_delta = layer1_error * self.__sigmoid_derivative(output_from_layer_1)
-
-        self.layers[0].synaptic_weights += training_set_inputs.T.dot(layer1_delta)
-        self.layers[1].synaptic_weights += output_from_layer_1.T.dot(layer2_delta)
+            # output_from_layer_1, output_from_layer_2 = self.think(training_set_inputs)
+            #
+            # layer2_error = training_set_outputs - output_from_layer_2
+            # layer2_delta = layer2_error * self.__sigmoid_derivative(output_from_layer_2)
+            #
+            # self.error = np.mean(np.abs(layer2_error))
+            #
+            # layer1_error = layer2_delta.dot(self.layers[1].synaptic_weights.T)
+            # layer1_delta = layer1_error * self.__sigmoid_derivative(output_from_layer_1)
+            #
+            # adjustment_2 = np.dot(output_from_layer_1.T, layer2_delta)
+            # adjustment_1 = np.dot(training_set_inputs.T, layer1_delta)
+            #
+            # self.layers[1].synaptic_weights += adjustment_2
+            # self.layers[0].synaptic_weights += adjustment_1
 
     # noinspection PyTypeChecker
     def think_layer(self, inputs, layer):
-        return self.__sigmoid(np.dot(inputs, layer.synaptic_weights))
+        layer.output = self.__sigmoid(np.dot(inputs, layer.synaptic_weights))
+        return layer.output
 
     # noinspection PyTypeChecker, PyUnresolvedReferences
     def think_output(self, inputs):
-        return self.think(inputs)[1][0]
+        return self.think(inputs)[-1][0]
 
     # noinspection PyTypeChecker
     def think(self, inputs):
-        output_from_layer1 = self.think_layer(inputs, self.layers[0])
-        output_from_layer2 = self.think_layer(output_from_layer1, self.layers[1])
-        return output_from_layer1, output_from_layer2
+        outputs = [self.think_layer(inputs, self.layers[0])]
+        for layer in self.layers[1:]:
+            outputs.append(self.think_layer(outputs[-1], layer))
+        return outputs
 
     def get_weights(self):
         return [layer.synaptic_weights for layer in self.layers]
