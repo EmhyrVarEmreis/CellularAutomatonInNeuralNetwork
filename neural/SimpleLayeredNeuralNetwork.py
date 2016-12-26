@@ -81,7 +81,7 @@ class SimpleLayeredNeuralNetwork:
                 if not l.startswith('#') and not l.strip() == '':
                     if l.startswith('&'):
                         size = [int(i) for i in l[1:].strip().split()]
-                        self.layers.append(NeuronLayer(size[0], size[1]))
+                        self.layers.append(NeuronLayer(*size))
                         self.layers[-1].synaptic_weights = []
                     else:
                         if len(self.layers) > 0:
