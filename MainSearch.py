@@ -71,6 +71,7 @@ def main(argv):
             if (j % opt_step) == 0:
                 if last_error == network.error:
                     # TODO Make mutation instead of breaking
+                    print('\tBreak - no progress')
                     break
                 if network.error < opt_max_error:
                     if network.error < last_error:
