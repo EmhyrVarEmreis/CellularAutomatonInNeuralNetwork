@@ -69,7 +69,7 @@ def main(argv):
         if opt_every and best_weights:
             print("\tError: " + str(network.error))
             network.save_synaptic_weights(opt_folder + '/' + str(i) + '.txt')
-        if network.error < best_of_bests:
+        if network.error < best_of_bests and network.error < opt_max_error:
             print("\tCurrent best error: " + str(network.error))
             best_of_bests = network.error
             network.save_synaptic_weights(opt_folder + '/' + str(network.error) + '-best.txt')
