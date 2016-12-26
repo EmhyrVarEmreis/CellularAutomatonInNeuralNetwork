@@ -19,6 +19,7 @@ def main(argv):
     opt_max_error = 0.2734375
     opt_folder = 'tmp/search/'
     opt_input_file = 'resource/life_all'
+    opt_weights_file = None
 
     if len(argv) > 0:
         opt_tries = int(argv[0])
@@ -28,6 +29,8 @@ def main(argv):
         opt_every = str(argv[4]).lower() == 't'
         opt_step = int(argv[5])
         opt_max_error = float(argv[6])
+        if len(argv) >= 7:
+            opt_weights_file = argv[7]
 
     training_set_tmp = TrainingLoader.load(opt_input_file)
 
@@ -46,6 +49,9 @@ def main(argv):
         network.add_layer(1, opt_neural_num)
     else:
         network = SimpleNeuralNetwork(len(training_set_tmp[0][0]))
+
+    if opt_weights_file is not None:
+        network.read_synaptic_weights(opt_weights_file)
 
     for i in range(opt_tries):
         print("Iteration: " + str(i + 1))
