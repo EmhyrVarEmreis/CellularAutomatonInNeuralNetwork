@@ -50,14 +50,15 @@ def main(argv):
     else:
         network = SimpleNeuralNetwork(len(training_set_tmp[0][0]))
 
-    if opt_weights_file is not None:
-        network.read_synaptic_weights(opt_weights_file)
-
     for i in range(opt_tries):
         print("Iteration: " + str(i + 1))
 
         np.random.seed()
-        network.rebuild()
+        if opt_weights_file is None:
+            network.rebuild()
+        else:
+            network.read_synaptic_weights(opt_weights_file)
+
         last_error = 0
 
         best_weights = None
