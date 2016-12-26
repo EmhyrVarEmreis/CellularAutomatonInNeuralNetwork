@@ -76,10 +76,18 @@ class SimpleLayeredNeuralNetwork:
 
     def read_synaptic_weights(self, filename):
         with open(filename) as f:
-            ret = \
-                np.array([[float(i) for i in l.split()] for l in f.readlines() if
-                          (not l.startswith('#')) and (not l.strip() == '')]).T
-            print(ret)
+            self.layers = []
+            for l in f.readlines():
+                if not l.startswith('#') and not l.strip() == '':
+                    if l.startswith('&'):
+                        size = [int(i) for i in l[1:].strip().split()]
+                        self.layers.append(NeuronLayer(size[0], size[1]))
+                        self.layers[-1].synaptic_weights = []
+                    else:
+                        if len(self.layers) > 0:
+                            self.layers[-1].synaptic_weights.append([float(i) for i in l.split()])
+            for layer in self.layers:
+                layer.synaptic_weights = np.array(layer.synaptic_weights).T
 
     def save_synaptic_weights(self, filename):
         with open(filename, 'w') as f:
