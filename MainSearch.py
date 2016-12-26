@@ -29,7 +29,7 @@ def main(argv):
         opt_every = str(argv[4]).lower() == 't'
         opt_step = int(argv[5])
         opt_max_error = float(argv[6])
-        if len(argv) >= 7:
+        if len(argv) > 7:
             opt_weights_file = argv[7]
 
     training_set_tmp = TrainingLoader.load(opt_input_file)
