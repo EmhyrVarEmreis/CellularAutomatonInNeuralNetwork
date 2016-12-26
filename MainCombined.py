@@ -57,8 +57,8 @@ if __name__ == "__main__":
     world_location = 'tmp/w1.txt'
     world_location_old = 'tmp/w0.txt'
     cycles_count_learning = 250
-    cycles_count_normal = 150
-    cycles_count_neural = 150
+    cycles_count_normal = 50
+    cycles_count_neural = 50
     gif_location_normal = 'tmp/w1a.gif'
     gif_location_neural = 'tmp/w1b.gif'
     processing_function_rule_location = 'resource/rule/2DA/life'
@@ -71,10 +71,16 @@ if __name__ == "__main__":
     processing_function = RuleParser.parse_rule_file(processing_function_rule_location)
 
     # Init world
-    world.make_random(world_percentage)
-    world.set_in_world(3, 3, CellState.Alive)
-    world.set_in_world(3, 4, CellState.Alive)
-    world.set_in_world(3, 5, CellState.Alive)
+    # world.make_random(world_percentage)
+    world.set_in_world(13, 13, CellState.Alive)
+    world.set_in_world(13, 14, CellState.Alive)
+    world.set_in_world(13, 15, CellState.Alive)
+    # Glider
+    world.set_in_world(1, 0, CellState.Alive)
+    world.set_in_world(2, 1, CellState.Alive)
+    world.set_in_world(0, 2, CellState.Alive)
+    world.set_in_world(1, 2, CellState.Alive)
+    world.set_in_world(2, 2, CellState.Alive)
     world.save(world_location_old)
     world.save_as_image('tmp/0.png', 5)
 
@@ -92,7 +98,7 @@ if __name__ == "__main__":
 
     # Load network
     nn = SimpleLayeredNeuralNetwork()
-    nn.read_synaptic_weights('resource/learned/0.0159669230214.txt')
+    nn.read_synaptic_weights('resource/learned/0.0108333399636.txt')
     print(nn.verify(TrainingLoader.load('tmp/life_all')))
     neural_network_combined = [nn]
     # # Learn network
