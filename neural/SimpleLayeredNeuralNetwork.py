@@ -8,6 +8,7 @@ class NeuronLayer:
         self.synaptic_weights = 2 * np.random.random((number_of_inputs_per_neuron, number_of_neurons)) - 1
 
 
+# TODO Make true multi-layered
 class SimpleLayeredNeuralNetwork:
     def __init__(self):
         self.layers = []

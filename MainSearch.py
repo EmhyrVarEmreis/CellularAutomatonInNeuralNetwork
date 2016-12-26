@@ -21,6 +21,8 @@ def main(argv):
     opt_input_file = 'resource/life_all'
     opt_weights_file = None
 
+    # TODO Add specific settings to enable learning from weights file with mutations
+
     if len(argv) > 0:
         opt_tries = int(argv[0])
         opt_cycles = int(argv[1])
@@ -37,6 +39,7 @@ def main(argv):
     inputs = np.array(training_set_tmp[0])
     outputs = np.array([training_set_tmp[1]]).T
 
+    # TODO Better folder name
     opt_folder = opt_folder + '/' + str(round(time.time()))
 
     os.makedirs(opt_folder, exist_ok=True)
@@ -67,6 +70,7 @@ def main(argv):
             network.train_once(inputs, outputs)
             if (j % opt_step) == 0:
                 if last_error == network.error:
+                    # TODO Make mutation instead of breaking
                     break
                 if network.error < opt_max_error:
                     if network.error < last_error:
