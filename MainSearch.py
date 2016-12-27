@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 
 import numpy as np
 
@@ -13,7 +12,7 @@ def main(argv):
     opt_tries = 1000
     opt_cycles = 30001
     opt_multi = True
-    opt_neural_num = 10
+    opt_multi_neural_num = 10
     opt_every = True
     opt_step = 1000
     opt_max_error = 0.2734375
@@ -27,7 +26,7 @@ def main(argv):
         opt_tries = int(argv[0])
         opt_cycles = int(argv[1])
         opt_multi = str(argv[2]).lower() == 't'
-        opt_neural_num = int(argv[3])
+        opt_multi_neural_num = int(argv[3])
         opt_every = str(argv[4]).lower() == 't'
         opt_step = int(argv[5])
         opt_max_error = float(argv[6])
@@ -39,19 +38,22 @@ def main(argv):
     inputs = np.array(training_set_tmp[0])
     outputs = np.array([training_set_tmp[1]]).T
 
-    # TODO Better folder name
-    opt_folder = opt_folder + '/' + str(round(time.time()))
-
     os.makedirs(opt_folder, exist_ok=True)
 
     best_of_bests = 1
 
     if opt_multi:
         network = SimpleLayeredNeuralNetwork()
-        network.add_layer(opt_neural_num, len(training_set_tmp[0][0]))
-        network.add_layer(1, opt_neural_num)
+        network.add_layer(opt_multi_neural_num, len(training_set_tmp[0][0]))
+        network.add_layer(1, opt_multi_neural_num)
     else:
         network = SimpleNeuralNetwork(len(training_set_tmp[0][0]))
+
+    opt_folder = opt_folder + '/' + '.'.join(
+        [str(layer.number_of_neurons) + '-' + str(layer.number_of_inputs_per_neuron) for layer in network.layers]
+    )
+
+    last_network = None
 
     for i in range(opt_tries):
         print("Iteration: " + str(i + 1))
@@ -78,13 +80,15 @@ def main(argv):
                         best_weights = network.get_weights()
                 last_error = network.error
 
+        last_network = network
+
         if opt_every and best_weights:
             print("\tError: " + str(network.error))
-            network.save_synaptic_weights(opt_folder + '/' + str(i) + '.txt')
+            network.save_synaptic_weights(opt_folder + '/' + str(network.error) + '.txt')
         if network.error < best_of_bests and network.error < opt_max_error:
             print("\tCurrent best error: " + str(network.error))
             best_of_bests = network.error
-            network.save_synaptic_weights(opt_folder + '/' + str(network.error) + '-best.txt')
+            network.save_synaptic_weights(opt_folder + '/' + str(network.error) + '.txt')
 
 
 if __name__ == "__main__":
