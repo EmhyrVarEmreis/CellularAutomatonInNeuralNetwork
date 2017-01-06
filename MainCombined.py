@@ -98,8 +98,8 @@ if __name__ == "__main__":
 
     # Load network
     nn = SimpleLayeredNeuralNetwork()
-    nn.read_synaptic_weights('resource/learned/0.0108333399636.txt')
-    print(nn.verify(TrainingLoader.load('tmp/life_all')))
+    nn.read_synaptic_weights('resource/learned/0.0159669230214.txt')
+    print(nn.verify(TrainingLoader.load('resource/life_all')))
     neural_network_combined = [nn]
     # # Learn network
     # neural_network_combined = learn_from_file(file_learn_loc, file_output_loc, learn_cycles_count, learn_reduce,

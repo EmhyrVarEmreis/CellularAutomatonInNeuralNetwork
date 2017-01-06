@@ -16,7 +16,7 @@ def main(argv):
     opt_max_error = 0.2734375
     opt_mutations = 5
     opt_mutation_value = .05
-    opt_folder = 'tmp/search/'
+    opt_folder = 'tmp/search'
     opt_input_file = 'resource/life_all'
     opt_weights_file = None
 
@@ -29,7 +29,7 @@ def main(argv):
         opt_every = str(argv[3]).lower() == 't'
         opt_step = int(argv[4])
         opt_max_error = float(argv[5])
-        opt_mutations = int(argv[6]) if argv[5].isdigit() else 0
+        opt_mutations = int(argv[6]) if argv[6].isdigit() else 0
         opt_mutation_value = float(argv[7])
         if len(argv) > 8:
             opt_weights_file = argv[8]
@@ -38,8 +38,6 @@ def main(argv):
 
     inputs = np.array(training_set_tmp[0])
     outputs = np.array([training_set_tmp[1]]).T
-
-    os.makedirs(opt_folder, exist_ok=True)
 
     best_of_bests = 1
 
@@ -52,12 +50,14 @@ def main(argv):
     else:
         network.add_layer(int(opt_multi_neural[0]), len(training_set_tmp[0][0]))
         for idx, val in enumerate(opt_multi_neural[1:]):
-            network.add_layer(int(val), int(opt_multi_neural[idx - 1]))
+            network.add_layer(int(val), int(opt_multi_neural[idx]))
         network.add_layer(1, int(opt_multi_neural[-1]))
 
     opt_folder = opt_folder + '/' + '.'.join(
         [str(layer.number_of_neurons) + '-' + str(layer.number_of_inputs_per_neuron) for layer in network.layers]
     )
+
+    os.makedirs(opt_folder, exist_ok=True)
 
     for i in range(opt_tries):
         print("Iteration: " + str(i + 1))
@@ -83,12 +83,11 @@ def main(argv):
                         print('\tMutating %d weights' % opt_mutations)
                         for x in range(opt_mutations):
                             layer = np.random.choice(network.layers)
-                            num = np.random.randint(0, len(layer.weights))
+                            num = np.random.randint(0, len(layer.synaptic_weights))
                             if np.random.choice([True, False]):
-                                layer.weights[num] *= (1.0 + opt_mutation_value)
+                                layer.synaptic_weights[num] *= (1.0 + opt_mutation_value)
                             else:
-                                layer.weights[num] *= (1.0 - opt_mutation_value)
-                        break
+                                layer.synaptic_weights[num] *= (1.0 - opt_mutation_value)
                 if network.error < opt_max_error:
                     if network.error < last_error:
                         best_weights = network.get_weights()
