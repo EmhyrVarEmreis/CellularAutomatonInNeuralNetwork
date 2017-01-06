@@ -84,14 +84,17 @@ def main(argv):
                         for x in range(opt_mutations):
                             layer = np.random.choice(network.layers)
                             num = np.random.randint(0, len(layer.synaptic_weights))
+                            nun = np.random.randint(0, len(layer.synaptic_weights[num]))
                             if np.random.choice([True, False]):
-                                layer.synaptic_weights[num] *= (1.0 + opt_mutation_value)
+                                layer.synaptic_weights[num][nun] *= (1.0 + opt_mutation_value)
                             else:
-                                layer.synaptic_weights[num] *= (1.0 - opt_mutation_value)
+                                layer.synaptic_weights[num][nun] *= (1.0 - opt_mutation_value)
                 if network.error < opt_max_error:
                     if network.error < last_error:
                         best_weights = network.get_weights()
                 last_error = network.error
+
+        print('\tCurrent error: ' + str(network.error))
 
         if opt_every and best_weights:
             print("\tError: " + str(network.error))
