@@ -25,7 +25,7 @@ def main(argv):
     if len(argv) > 0:
         opt_tries = int(argv[0])
         opt_cycles = int(argv[1])
-        opt_multi_neural = int(argv[2])
+        opt_multi_neural = argv[2]
         opt_every = str(argv[3]).lower() == 't'
         opt_step = int(argv[4])
         opt_max_error = float(argv[5])
