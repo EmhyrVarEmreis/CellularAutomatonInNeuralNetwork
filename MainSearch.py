@@ -53,8 +53,8 @@ def main(argv):
             network.add_layer(int(val), int(opt_multi_neural[idx]))
         network.add_layer(1, int(opt_multi_neural[-1]))
 
-    opt_folder = opt_folder + '/' + '.'.join(
-        [str(layer.number_of_neurons) + '-' + str(layer.number_of_inputs_per_neuron) for layer in network.layers]
+    opt_folder = opt_folder + '/' + '-'.join(
+        [str(layer.number_of_neurons) for layer in network.layers]
     )
 
     os.makedirs(opt_folder, exist_ok=True)
