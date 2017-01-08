@@ -52,15 +52,16 @@ if __name__ == "__main__":
     file_output_loc = 'tmp/n1'
     learn_cycles_count = 60000
     learn_reduce = True
-    world_size = [25, 25]
+    world_size = [10, 10]
     world_percentage = 55
     world_location = 'tmp/w1.txt'
     world_location_old = 'tmp/w0.txt'
     cycles_count_learning = 250
-    cycles_count_normal = 50
-    cycles_count_neural = 50
+    cycles_count_normal = 20
+    cycles_count_neural = 20
     gif_location_normal = 'tmp/w1a.gif'
     gif_location_neural = 'tmp/w1b.gif'
+    gif_scale = 20
     processing_function_rule_location = 'resource/rule/2DA/life'
     neural_multi = True
     neural_multi_layer1_count = 9
@@ -72,9 +73,9 @@ if __name__ == "__main__":
 
     # Init world
     # world.make_random(world_percentage)
-    world.set_in_world(13, 13, CellState.Alive)
-    world.set_in_world(13, 14, CellState.Alive)
-    world.set_in_world(13, 15, CellState.Alive)
+    world.set_in_world(4, 4, CellState.Alive)
+    world.set_in_world(4, 5, CellState.Alive)
+    world.set_in_world(4, 6, CellState.Alive)
     # Glider
     world.set_in_world(1, 0, CellState.Alive)
     world.set_in_world(2, 1, CellState.Alive)
@@ -98,7 +99,7 @@ if __name__ == "__main__":
 
     # Load network
     nn = SimpleLayeredNeuralNetwork()
-    nn.read_synaptic_weights('resource/learned/0.0159669230214.txt')
+    nn.read_synaptic_weights('resource/learned/0.0108333399636.txt')
     print(nn.verify(TrainingLoader.load('resource/life_all')))
     neural_network_combined = [nn]
     # # Learn network
@@ -120,7 +121,7 @@ if __name__ == "__main__":
     world.load(world_location_old)
 
     # Make normal cycles GIF
-    processor.make_cycles_gif(cycles_count_normal, gif_location_normal, 5)
+    processor.make_cycles_gif(cycles_count_normal, gif_location_normal, gif_scale)
     # world.save_as_image('tmp/a1.png', 5)
     # processor.make_cycle()
     # world.save_as_image('tmp/a2.png', 5)
@@ -141,7 +142,7 @@ if __name__ == "__main__":
     world.save('tmp/tmp2.txt')
 
     # Make neural processed cycles GIF
-    processor.make_cycles_gif(cycles_count_neural, gif_location_neural, 5)
+    processor.make_cycles_gif(cycles_count_neural, gif_location_neural, gif_scale)
     # world.save_as_image('tmp/b1.png', 5)
     # processor.make_cycle()
     # world.save_as_image('tmp/b2.png', 5)
