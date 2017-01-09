@@ -20,8 +20,6 @@ def main(argv):
     opt_input_file = 'resource/life_all'
     opt_weights_file = None
 
-    # TODO Add specific settings to enable learning from weights file with mutations
-
     if len(argv) > 0:
         opt_tries = int(argv[0])
         opt_cycles = int(argv[1])
@@ -31,8 +29,9 @@ def main(argv):
         opt_max_error = float(argv[5])
         opt_mutations = int(argv[6]) if argv[6].isdigit() else 0
         opt_mutation_value = float(argv[7])
-        if len(argv) > 8:
-            opt_weights_file = argv[8]
+        opt_folder = argv[8]
+        if len(argv) > 9:
+            opt_weights_file = argv[9]
 
     training_set_tmp = TrainingLoader.load(opt_input_file)
 
