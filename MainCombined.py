@@ -7,24 +7,15 @@ from automaton.CellState import CellState
 from automaton.ProcessingFunction import get_neural_processing_function_bundle
 from automaton.SimpleProcessor import SimpleProcessor
 from automaton.World import World
-from neural import TrainingLoader
 from neural.SimpleLayeredNeuralNetwork import SimpleLayeredNeuralNetwork
 from neural.SimpleNeuralNetwork import SimpleNeuralNetwork
+from util.training import load_training_set, reduce_training_set
 
 
 def learn_from_file(file_learn, file_output=None, cycles=10000, reduce=False, multi=False, neural_num=3):
-    training_set_tmp = TrainingLoader.load(file_learn)
+    training_set_tmp = load_training_set(file_learn)
     if reduce:
-        n = 0
-        c = 0
-        training_set_tmp_inputs = []
-        training_set_tmp_outputs = []
-        for row in training_set_tmp[0]:
-            if row not in training_set_tmp_inputs:
-                training_set_tmp_inputs.append(row)
-                training_set_tmp_outputs.append(training_set_tmp[1][n])
-            n += 1
-        training_set_tmp = [training_set_tmp_inputs, training_set_tmp_outputs]
+        training_set_tmp = reduce_training_set(training_set_tmp)
     if multi:
         network = SimpleLayeredNeuralNetwork()
         network.add_layer(neural_num, len(training_set_tmp[0][0]))
@@ -33,13 +24,9 @@ def learn_from_file(file_learn, file_output=None, cycles=10000, reduce=False, mu
     else:
         network = SimpleNeuralNetwork(len(training_set_tmp[0][0]))
         layers = network.synaptic_weights
-    print(len(training_set_tmp[1]))
     network.print_weights()
     network.train(array(training_set_tmp[0]), array([training_set_tmp[1]]).T, cycles)
     network.print_weights()
-    # for cycle in range(cycles):
-    #     network.train(array(training_set_tmp[0]), array([training_set_tmp[1]]).T, 1)
-    #     print(network.verify(training_set_tmp))
     if file_output is not None:
         network.save_synaptic_weights(file_output)
     status = network.verify(training_set_tmp)
@@ -73,6 +60,7 @@ if __name__ == "__main__":
 
     # Init world
     # world.make_random(world_percentage)
+    # Blinker
     world.set_in_world(4, 4, CellState.Alive)
     world.set_in_world(4, 5, CellState.Alive)
     world.set_in_world(4, 6, CellState.Alive)
@@ -88,11 +76,11 @@ if __name__ == "__main__":
     # Load processing function
     processor = SimpleProcessor(world, processing_function)
 
-    # # Clear learning output
-    # processor.clear_learning_output()
-
     # # Enable learning output
     # processor.enable_learning_output(True, file_learn_loc)
+
+    # # Clear learning output
+    # processor.clear_learning_output()
 
     # # Run learning cycles
     # processor.make_cycles(cycles_count_learning)
@@ -100,7 +88,7 @@ if __name__ == "__main__":
     # Load network
     nn = SimpleLayeredNeuralNetwork()
     nn.read_synaptic_weights('resource/learned/0.0108333399636.txt')
-    print(nn.verify(TrainingLoader.load('resource/life_all')))
+    print(str(nn.verify(load_training_set('resource/training_set/life_all'))) + '%')
     neural_network_combined = [nn]
     # # Learn network
     # neural_network_combined = learn_from_file(file_learn_loc, file_output_loc, learn_cycles_count, learn_reduce,

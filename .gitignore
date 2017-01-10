@@ -93,3 +93,4 @@ ENV/
 
 # Own Stuff
 tmp/
+*.tmp_file_tmp

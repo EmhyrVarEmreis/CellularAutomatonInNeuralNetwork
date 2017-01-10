@@ -3,8 +3,8 @@ import sys
 
 import numpy as np
 
-from neural import TrainingLoader
 from neural.SimpleLayeredNeuralNetwork import SimpleLayeredNeuralNetwork
+from util.training import load_training_set
 
 
 def main(argv):
@@ -33,7 +33,7 @@ def main(argv):
         if len(argv) > 9:
             opt_weights_file = argv[9]
 
-    training_set_tmp = TrainingLoader.load(opt_input_file)
+    training_set_tmp = load_training_set(opt_input_file)
 
     inputs = np.array(training_set_tmp[0])
     outputs = np.array([training_set_tmp[1]]).T

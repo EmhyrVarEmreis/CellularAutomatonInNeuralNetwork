@@ -38,8 +38,6 @@ def get_neural_processing_function_bundle(neighborhood, neural_network):
     def processing_function(world, x, y, extended_output=False):
         output = neighborhood(world, x, y, True)
         ret = neural_network.think_output(array([float(i) for i in output[:-1]]))
-        # print([float(i) for i in output[:-1]])
-        # print(ret)
         if ret > 0.5:
             ret = 1
         else:
