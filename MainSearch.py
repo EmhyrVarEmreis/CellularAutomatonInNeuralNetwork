@@ -17,7 +17,7 @@ def main(argv):
     opt_mutations = 5
     opt_mutation_value = .05
     opt_folder = 'tmp/search'
-    opt_input_file = 'resource/life_all'
+    opt_input_file = 'resource/training_set/life_all'
     opt_weights_file = None
 
     if len(argv) > 0:
@@ -30,8 +30,9 @@ def main(argv):
         opt_mutations = int(argv[6]) if argv[6].isdigit() else 0
         opt_mutation_value = float(argv[7])
         opt_folder = argv[8]
-        if len(argv) > 9:
-            opt_weights_file = argv[9]
+        opt_input_file = argv[9]
+        if len(argv) > 10:
+            opt_weights_file = argv[10]
 
     training_set_tmp = load_training_set(opt_input_file)
 
