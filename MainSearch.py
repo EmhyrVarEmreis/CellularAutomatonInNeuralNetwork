@@ -62,7 +62,8 @@ def main(argv):
     for i in range(opt_tries):
         print("Iteration: " + str(i + 1))
 
-        np.random.seed()
+        np.random.seed(1)
+
         if opt_weights_file is None:
             network.rebuild()
         else:
