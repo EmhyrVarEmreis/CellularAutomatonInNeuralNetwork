@@ -39,13 +39,13 @@ if __name__ == "__main__":
     file_output_loc = 'tmp/n1'
     learn_cycles_count = 60000
     learn_reduce = True
-    world_size = [50, 50]
+    world_size = [40, 40]
     world_percentage = 55
     world_location = 'tmp/w1.txt'
     world_location_old = 'tmp/w0.txt'
     cycles_count_learning = 250
-    cycles_count_normal = 250
-    cycles_count_neural = 250
+    cycles_count_normal = 20
+    cycles_count_neural = 20
     gif_location_normal = 'tmp/w1a.gif'
     gif_location_neural = 'tmp/w1b.gif'
     gif_scale = 5
@@ -61,70 +61,15 @@ if __name__ == "__main__":
     # Init world
     # world.make_random(world_percentage)
     # Blinker
-    world.set_in_world(44, 4, CellState.Alive)
-    world.set_in_world(44, 5, CellState.Alive)
-    world.set_in_world(44, 6, CellState.Alive)
+    world.set_in_world(4, 4, CellState.Alive)
+    world.set_in_world(4, 5, CellState.Alive)
+    world.set_in_world(4, 6, CellState.Alive)
     # Glider
-    # world.set_in_world(1, 0, CellState.Alive)
-    # world.set_in_world(2, 1, CellState.Alive)
-    # world.set_in_world(0, 2, CellState.Alive)
-    # world.set_in_world(1, 2, CellState.Alive)
-    # world.set_in_world(2, 2, CellState.Alive)
-    # Glider #2
-    world.set_in_world(41, 20, CellState.Alive)
-    world.set_in_world(42, 21, CellState.Alive)
-    world.set_in_world(40, 22, CellState.Alive)
-    world.set_in_world(41, 22, CellState.Alive)
-    world.set_in_world(42, 22, CellState.Alive)
-    # Pulsar
-    world.set_in_world(3, 5, CellState.Alive)
-    world.set_in_world(3, 6, CellState.Alive)
-    world.set_in_world(3, 7, CellState.Alive)
-    world.set_in_world(3, 11, CellState.Alive)
-    world.set_in_world(3, 12, CellState.Alive)
-    world.set_in_world(3, 13, CellState.Alive)
-    world.set_in_world(5, 3, CellState.Alive)
-    world.set_in_world(6, 3, CellState.Alive)
-    world.set_in_world(7, 3, CellState.Alive)
-    world.set_in_world(5, 8, CellState.Alive)
-    world.set_in_world(6, 8, CellState.Alive)
-    world.set_in_world(7, 8, CellState.Alive)
-    world.set_in_world(5, 10, CellState.Alive)
-    world.set_in_world(6, 10, CellState.Alive)
-    world.set_in_world(7, 10, CellState.Alive)
-    world.set_in_world(5, 15, CellState.Alive)
-    world.set_in_world(6, 15, CellState.Alive)
-    world.set_in_world(7, 15, CellState.Alive)
-    world.set_in_world(8, 5, CellState.Alive)
-    world.set_in_world(8, 6, CellState.Alive)
-    world.set_in_world(8, 7, CellState.Alive)
-    world.set_in_world(8, 11, CellState.Alive)
-    world.set_in_world(8, 12, CellState.Alive)
-    world.set_in_world(8, 13, CellState.Alive)
-    world.set_in_world(10, 5, CellState.Alive)
-    world.set_in_world(10, 6, CellState.Alive)
-    world.set_in_world(10, 7, CellState.Alive)
-    world.set_in_world(10, 11, CellState.Alive)
-    world.set_in_world(10, 12, CellState.Alive)
-    world.set_in_world(10, 13, CellState.Alive)
-    world.set_in_world(15, 5, CellState.Alive)
-    world.set_in_world(15, 6, CellState.Alive)
-    world.set_in_world(15, 7, CellState.Alive)
-    world.set_in_world(15, 11, CellState.Alive)
-    world.set_in_world(15, 12, CellState.Alive)
-    world.set_in_world(15, 13, CellState.Alive)
-    world.set_in_world(11, 3, CellState.Alive)
-    world.set_in_world(12, 3, CellState.Alive)
-    world.set_in_world(13, 3, CellState.Alive)
-    world.set_in_world(11, 8, CellState.Alive)
-    world.set_in_world(12, 8, CellState.Alive)
-    world.set_in_world(13, 8, CellState.Alive)
-    world.set_in_world(11, 10, CellState.Alive)
-    world.set_in_world(12, 10, CellState.Alive)
-    world.set_in_world(13, 10, CellState.Alive)
-    world.set_in_world(11, 15, CellState.Alive)
-    world.set_in_world(12, 15, CellState.Alive)
-    world.set_in_world(13, 15, CellState.Alive)
+    world.set_in_world(1, 0, CellState.Alive)
+    world.set_in_world(2, 1, CellState.Alive)
+    world.set_in_world(0, 2, CellState.Alive)
+    world.set_in_world(1, 2, CellState.Alive)
+    world.set_in_world(2, 2, CellState.Alive)
     world.save(world_location_old)
     world.save_as_image('tmp/0.png', 5)
 
