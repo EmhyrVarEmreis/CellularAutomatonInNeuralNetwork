@@ -3,3 +3,5 @@ Artificial neural network (multilayer perceptron) used as engine in cellular aut
 
 ![Normal](readme-res/w1a.gif)
 ![Neural](readme-res/w1b.gif)
+
+_(These GIF images are not in loop)_
