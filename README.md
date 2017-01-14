@@ -1,2 +1,5 @@
 # ConvolutionalCellularNetwork
-Some description
+Artificial neural network (multilayer perceptron) used as engine in cellular automaton.
+
+![Normal](readme-res/w1a.gif)
+![Neural](readme-res/w1b.gif)
