@@ -59,10 +59,10 @@ def main(argv):
 
     os.makedirs(opt_folder, exist_ok=True)
 
+    np.random.seed(1)
+
     for i in range(opt_tries):
         print("Iteration: " + str(i + 1))
-
-        np.random.seed(1)
 
         if opt_weights_file is None:
             network.rebuild()
@@ -70,6 +70,7 @@ def main(argv):
             network.read_synaptic_weights(opt_weights_file)
 
         last_error = 0
+        mutated = False
 
         best_weights = None
 
@@ -81,6 +82,9 @@ def main(argv):
                         print('\tBreak - no progress')
                         break
                     else:
+                        if mutated:
+                            print('\tBreak - no progress despite mutations')
+                            break
                         print('\tMutating %d weights' % opt_mutations)
                         for x in range(opt_mutations):
                             layer = np.random.choice(network.layers)
@@ -90,6 +94,9 @@ def main(argv):
                                 layer.synaptic_weights[num][nun] *= (1.0 + opt_mutation_value)
                             else:
                                 layer.synaptic_weights[num][nun] *= (1.0 - opt_mutation_value)
+                        mutated = True
+                else:
+                    mutated = False
                 if network.error < opt_max_error:
                     if network.error < last_error:
                         best_weights = network.get_weights()
