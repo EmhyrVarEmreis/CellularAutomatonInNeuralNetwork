@@ -39,7 +39,7 @@ if __name__ == "__main__":
     file_output_loc = 'tmp/n1'
     learn_cycles_count = 60000
     learn_reduce = True
-    world_size = [10, 10]
+    world_size = [40, 40]
     world_percentage = 55
     world_location = 'tmp/w1.txt'
     world_location_old = 'tmp/w0.txt'
@@ -48,8 +48,8 @@ if __name__ == "__main__":
     cycles_count_neural = 20
     gif_location_normal = 'tmp/w1a.gif'
     gif_location_neural = 'tmp/w1b.gif'
-    gif_scale = 20
-    processing_function_rule_location = 'resource/rule/2DA/life'
+    gif_scale = 5
+    processing_function_rule_location = 'resource/rule/2DA/high_life'
     neural_multi = True
     neural_multi_layer1_count = 9
 

@@ -94,3 +94,5 @@ ENV/
 # Own Stuff
 tmp/
 *.tmp_file_tmp
+tmp_file_tmp
+Playground.py

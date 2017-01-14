@@ -4,11 +4,11 @@ from util.training import generate_reduced_training_set_from_cellular, save_trai
 
 
 def main(argv):
-    opt_processing_function_rule_location = 'resource/rule/2DA/replicator'
+    opt_processing_function_rule_location = 'resource/rule/2DA/2x2'
     opt_world_size = [50, 50]
     opt_world_percentage = 65
     opt_cycles_count = 50
-    opt_output_location = 'resource/training_set/replicator_all'
+    opt_output_location = 'resource/training_set/2x2_all'
     if len(argv) == 5:
         opt_processing_function_rule_location = argv[0]
         opt_world_size = [int(x) for x in argv[1].split('-')]
