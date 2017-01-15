@@ -5,8 +5,8 @@ from util.training import load_training_set
 
 
 def main(argv):
-    opt_neural_network_file = 'resource/learned/0.0108333399636.txt'
-    opt_training_set_location = 'resource/training_set/life_all'
+    opt_neural_network_file = 'resource/learned/2x2/15-1/0.222792568305.txt'
+    opt_training_set_location = 'resource/training_set/2x2_all'
     if len(argv) == 2:
         opt_neural_network_file = argv[0]
         opt_training_set_location = argv[1]
