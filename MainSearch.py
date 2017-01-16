@@ -77,7 +77,7 @@ def main(argv):
         for j in range(opt_cycles):
             network.train_once(inputs, outputs)
             if (j % opt_step) == 0:
-                if round(last_error, 3) == round(network.error, 3):
+                if round(last_error, 5) == round(network.error, 5):
                     if opt_mutations == 0:
                         print('\tBreak - no progress')
                         break
