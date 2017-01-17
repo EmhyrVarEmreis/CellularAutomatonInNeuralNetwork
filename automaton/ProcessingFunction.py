@@ -31,7 +31,7 @@ def get_processing_function_bundle(dimensions, neighborhood_type, birth_nums, su
         else:
             return new_state
 
-    return [processing_function, neighborhood]
+    return processing_function, neighborhood
 
 
 def get_neural_processing_function_bundle(neighborhood, neural_network):
@@ -49,4 +49,4 @@ def get_neural_processing_function_bundle(neighborhood, neural_network):
         else:
             return new_state
 
-    return [processing_function, neighborhood]
+    return processing_function, neighborhood

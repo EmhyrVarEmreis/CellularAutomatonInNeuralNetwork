@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     # Load network
     nn = SimpleLayeredNeuralNetwork()
-    nn.read_synaptic_weights('resource/learned/0.0108333399636.txt')
+    nn.read_synaptic_weights('resource/learned/life/15-2-1/0.000280158374134.txt')
     print(str(nn.verify(load_training_set('resource/training_set/life_all'))) + '%')
     neural_network_combined = [nn]
     # # Learn network
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     # world.save_as_image('tmp/a5.png', 5)
 
     processing_function_neural = get_neural_processing_function_bundle(
-        processor.processing_function_bundle[1], neural_network_combined[0]
+        processing_function[1], neural_network_combined[0]
     )
     processor = SimpleProcessor(world, processing_function_neural)
 
