@@ -4,6 +4,7 @@ import numpy as np
 class SimpleNeuralNetwork:
     synaptic_weights = None
     input_size = None
+    train_factor = 1.0
 
     def __init__(self, n, filename=None):
         self.error = -1
@@ -36,7 +37,7 @@ class SimpleNeuralNetwork:
         self.error = np.mean(np.abs(error))
 
         # noinspection PyTypeChecker
-        adjustment = np.dot(training_set_inputs.T, error * self.__sigmoid_derivative(output))
+        adjustment = self.train_factor * np.dot(training_set_inputs.T, error * self.__sigmoid_derivative(output))
 
         self.synaptic_weights += adjustment
 

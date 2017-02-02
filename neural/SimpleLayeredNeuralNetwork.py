@@ -13,6 +13,7 @@ class SimpleLayeredNeuralNetwork:
     def __init__(self):
         self.layers = []
         self.error = -1
+        self.train_factor = 1.0
 
     def add_layer(self, number_of_neurons, number_of_inputs_per_neuron):
         self.layers.append(NeuronLayer(number_of_neurons, number_of_inputs_per_neuron))
@@ -49,9 +50,9 @@ class SimpleLayeredNeuralNetwork:
                 layer.error = np.dot(prev_layer.delta, prev_layer.synaptic_weights.T)
             layer.delta = layer.error * self.__sigmoid_derivative(layer.output)
             if next_layer is None:
-                layer.adjustment = np.dot(training_set_inputs.T, layer.delta)
+                layer.adjustment = self.train_factor * np.dot(training_set_inputs.T, layer.delta)
             else:
-                layer.adjustment = np.dot(next_layer.output.T, layer.delta)
+                layer.adjustment = self.train_factor * np.dot(next_layer.output.T, layer.delta)
             prev_layer = layer
 
         for layer in self.layers:
